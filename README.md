@@ -2,5 +2,5 @@
 
 ## Todo
 
-- [ ] Add rubocop
+- [x] Add rubocop
 - [ ] Update to latest ruby version
