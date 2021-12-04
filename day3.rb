@@ -2,7 +2,6 @@
 
 # Representation of a binary number, based on arrays to utilize transpose
 class BinaryNumber < Array
-  # TOOD: Fix so doesn't lose BinaryNumber class when doing array operations
   def self.from_array(array)
     new.concat(array)
   end
@@ -34,23 +33,20 @@ class DiagnosticReport
   def initialize(binary_matrix)
     @binary_matrix = binary_matrix
 
-    # TOOD: Fix so doesn't lose BinaryNumber class when doing array operations
-    @gamma_rate_binary_number = BinaryNumber.from_array(most_common_bits_in_matrix)
+    @gamma_rate_binary_number = most_common_bits_in_matrix
   end
 
   def most_common_bits_in_matrix
-    @binary_matrix.transpose.map { |bits_in_position| most_common_bit(bits_in_position) }
+    bit_array = @binary_matrix.transpose.map { |bits_in_position| most_common_bit(bits_in_position) }
+    BinaryNumber.from_array(bit_array)
   end
 
-  # TODO: Didn't bother checking if BinaryNumber here, just refered to as bit_array
-  # Since in this case this refers to the first bit in all the binary numbers it might be
-  # confusing to refer to it as BinaryNumber, probably is just an array, but better check
   def most_common_bit(bit_array)
     bit_array.tally.max_by(&:last).first
   end
 
   def gamma_rate
-    @gamma_rate_binary_number.to_s.to_i(2)
+    @gamma_rate_binary_number.to_i
   end
 
   def epsilon_rate
