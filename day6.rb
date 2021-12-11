@@ -59,11 +59,18 @@ class World
 end
 
 values = File.readlines('day6_puzzle_input.txt').first.split(',').map(&:to_i)
+
 fish = values.map { |value| LanternFish.new(value) }
 world = World.new fish
-
 80.times do
   world.tick
 end
-
 puts "Part1: #{world.fish.count}"
+
+# Takes too long with current solution, would need to improve the performance to calculate this number
+#fish = values.map { |value| LanternFish.new(value) }
+#world = World.new fish
+#256.times do
+#  world.tick
+#end
+#puts "Part2: #{world.fish.count}"
