@@ -56,7 +56,7 @@ def validate_character(line, open_characters)
   validate_character(line, open_characters)
 end
 
-lines = File.readlines('day10_puzzleinput.txt').map(&:chomp)
+lines = File.readlines('day10_puzzle_input.txt').map(&:chomp)
 error_score = error_score_for(lines)
 
 puts "Part1: #{error_score}"
