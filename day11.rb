@@ -2,6 +2,8 @@
 
 # Representation of a map of dumbo octopuses
 class Map
+  attr_reader :steps
+
   def initialize(octopus_matrix)
     @octopus_lookup_table = Array.new([])
     octopus_matrix.map.with_index do |octopuses, y|
@@ -9,13 +11,15 @@ class Map
         Octopus.new(x.to_i, y.to_i, energy.to_i)
       end
     end
+    @steps = 0
   end
 
   def step
+    flashing_octopuses.each(&:reset)
     increment_octopus_energy
     # TODO: Could improve by only fetching flashing octopuses once
     flashable_octopuses.each { |octopus| flash_octopus(octopus) } while flashable_octopuses.count.positive?
-    flashing_octopuses.each(&:reset)
+    @steps += 1
   end
 
   def flashable_octopuses
@@ -28,6 +32,10 @@ class Map
     @octopus_lookup_table.map do |octopuses|
       octopuses.select(&:is_flashing)
     end.flatten
+  end
+
+  def octopuses
+    @octopus_lookup_table.flatten
   end
 
   def flash_octopus(octopus)
@@ -110,3 +118,8 @@ map = Map.new(matrix)
 100.times { map.step }
 
 puts "Part1: #{map.num_flashes}"
+
+map = Map.new(matrix)
+# TODO: Change to until loop?
+map.step until map.flashing_octopuses.count == map.octopuses.count
+puts "Part2: #{map.steps}"
